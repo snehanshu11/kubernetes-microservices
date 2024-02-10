@@ -48,7 +48,15 @@
 - Create configmap file to store the environment variable
 - Create deployment and service file for server and client
 - Make sure you are able to see the environment variables on the pods
-  - Write steps on how to check
+  ```
+  snehanshu.suman@LT7818 kubernetes % kubectl exec -it client-deployment-64dc9f87c-9ddfj -- /bin/bash
+  root@client-deployment-64dc9f87c-9ddfj:/app# env  | grep SERVER_HOST
+  SERVER_HOST=server-service
+  root@client-deployment-64dc9f87c-9ddfj:/app# env  | grep SERVER_PORT
+  SERVER_PORT=8000
+  root@client-deployment-64dc9f87c-9ddfj:/app# 
+
+  ```
 - Make sure that the communication between client and server  is happening inside the cluster so it needs to be of ClusterIP type. However the client should be exposed to outside world, so use LoadBalancer type
 - Test the application again.
 
@@ -98,10 +106,5 @@ kubectl config current-context
 MegaAdmin@kube-cluster.us-west-2.eksctl.io
 
 
-snehanshu.suman@LT7818 kubernetes % kubectl exec -it client-deployment-64dc9f87c-9ddfj -- /bin/bash
+
  
-root@client-deployment-64dc9f87c-9ddfj:/app# env  | grep SERVER_HOST
-SERVER_HOST=server-service
-root@client-deployment-64dc9f87c-9ddfj:/app# env  | grep SERVER_PORT
-SERVER_PORT=8000
-root@client-deployment-64dc9f87c-9ddfj:/app# 
