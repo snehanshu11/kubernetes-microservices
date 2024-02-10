@@ -93,6 +93,7 @@
 kubectl delete deployment --all
 kubectl delete configmap --all 
 kubectl delete service --all
+eksctl delete cluster --name=kube-cluster --region=us-west-2
 ```
 
 # Miscellaneous
