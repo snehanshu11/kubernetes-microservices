@@ -1,17 +1,54 @@
-# kubernetes Architecture (used https://excalidraw.com/ to draw).
+# kubernetes Architecture 
+- used https://excalidraw.com/ to draw.
+- Diagram:
 ![kubernees](https://github.com/snehanshu11/kubernetes-microservices/assets/8538859/c6865abb-4877-42ed-94e4-c048e8ae530e)
-
-- Write two microservices in FASTAPI. ([server.py](https://github.com/snehanshu11/kubernetes-microservices/blob/main/server/server.py), [client.py](https://github.com/snehanshu11/kubernetes-microservices/blob/main/client/client.py))
+- k8s Architecture Concepts:
+  - Worker Nodes
+  - Pods
+  - containers
+  - images
+  - Master/Control plane
+  - ReplicaSet
+  - Deployment
+  - Services
+    - NodePort
+    - ClusterIP
+    - Loadbalancer
+    
+# Application Code
+- Write two microservices in FASTAPI.
+  - ([server.py](https://github.com/snehanshu11/kubernetes-microservices/blob/main/server/server.py)
+    - A simple get request that returns item+100 value
+    - Since the server is processing the request , client field is set to false and server field is set to true
+    - server endpoint is exposed only to thw client
+  - [client.py](https://github.com/snehanshu11/kubernetes-microservices/blob/main/client/client.py))
+    - client endpoint is exposed to the public
+    - client will call server endpoint to get the value
+    - Since client is calling server, both client and server is set to true in teh response. 
 - Run the microservices on a local machine to test that it works.
+  - Add how to run using uvicorn and screenshots later
 - Use of  environment variables in the code to keep it microservices decoupled
+  - As we use environment varibles and don't hard code values, similarly configMaps and secrets will be used  
+
+# Creating and uploading Docker images to ECR
 - Write a docker file for each microservices .
-- Test images individually
+  - [server-dockerfile](https://github.com/snehanshu11/kubernetes-microservices/blob/main/server/Dockerfile)
+  - [client-dockerfile](https://github.com/snehanshu11/kubernetes-microservices/blob/main/client/Dockerfile)
 - Build docker file for each microservices
+    - Menion steps to build the image
+- Test images individually
+   - Mention steps to test
 - Upload the images to ECR repository
+  - mention steps to upload the images to ECR.
+ 
+# create EKS cluster
 - Create a kubernetes cluster using eksctl command with two nodes (aws managed)
+  - Write command and explain what we tring to achieve
+# create deployment/service/configmaps for server and cleint microservice
 - Create configmap file to store the environment variable
 - Create deployment and service file for server and client
 - Make sure you are able to see the environment variables on the pods
+  - Write steps on how to check
 - Make sure that the communication between client and server  is happening inside the cluster so it needs to be of ClusterIP type. However the client should be exposed to outside world, so use LoadBalancer type
 - Test the application again.
 
