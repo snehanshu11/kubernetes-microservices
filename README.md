@@ -60,6 +60,8 @@
 # create EKS cluster
 - Create a kubernetes cluster using eksctl command with two nodes 
   ```
+   eksctl get cluster
+   eksctl utils write-kubeconfig --cluster=<name>
    eksctl create cluster --name kube-cluster --nodegroup-name ng-default --version 1.28 --node-type t2.micro --nodes 2 --region us-west-2
   ```
 -  AWS managed, 2 nodes
