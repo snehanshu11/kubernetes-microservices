@@ -1,17 +1,20 @@
-Architecture.
-Write two microservices in FASTAPI. (server.py, client.py)
-Run the microservices on a local machine to test that it works.
-Use of  environment variables in the code to keep it microservices decoupled
-Write a docker file for each microservices . 
-Test images individually
-Build docker file for each microservices
-Upload the images to ECR repository
-Create a kubernetes cluster using eksctl command with two nodes (aws managed)
-Create configmap file to store the environment variable 
-Create deployment and service file for server and client 
-Make sure you are able to see the environment variables on the pods
-Make sure that the communication between client and server  is happening inside the cluster so it needs to be of ClusterIP type. However the client should be exposed to outside world, so use LoadBalancer type
-Test the application again.
+- Architecture.
+
+![kubernees](https://github.com/snehanshu11/kubernetes-microservices/assets/8538859/c6865abb-4877-42ed-94e4-c048e8ae530e)
+
+- Write two microservices in FASTAPI. (server.py, client.py)
+- Run the microservices on a local machine to test that it works.
+- Use of  environment variables in the code to keep it microservices decoupled
+- Write a docker file for each microservices .
+- Test images individually
+- Build docker file for each microservices
+- Upload the images to ECR repository
+- Create a kubernetes cluster using eksctl command with two nodes (aws managed)
+- Create configmap file to store the environment variable
+- Create deployment and service file for server and client
+- Make sure you are able to see the environment variables on the pods
+- Make sure that the communication between client and server  is happening inside the cluster so it needs to be of ClusterIP type. However the client should be exposed to outside world, so use LoadBalancer type
+- Test the application again.
 
 
 
