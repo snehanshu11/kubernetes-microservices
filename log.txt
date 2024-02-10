@@ -1,0 +1,65 @@
+[ec2-user@ip-10-10-1-146 server]$ sudo docker build -t myserver:v1 .
+[+] Building 12.3s (9/9) FINISHED                                                                                                                                                                                                              docker:default
+ => [internal] load build definition from Dockerfile                                                                                                                                                                                                     0.0s
+ => => transferring dockerfile: 277B                                                                                                                                                                                                                     0.0s
+ => [internal] load .dockerignore                                                                                                                                                                                                                        0.0s
+ => => transferring context: 2B                                                                                                                                                                                                                          0.0s
+ => [internal] load metadata for docker.io/library/python:3.9-slim                                                                                                                                                                                       0.1s
+ => [1/4] FROM docker.io/library/python:3.9-slim@sha256:bcdcaefe092335ff0a0ed421e8a8d12b86fc2c1feb1199fbdac27d67ba808a9c                                                                                                                                 0.0s
+ => [internal] load build context                                                                                                                                                                                                                        0.0s
+ => => transferring context: 868B                                                                                                                                                                                                                        0.0s
+ => CACHED [2/4] WORKDIR /app                                                                                                                                                                                                                            0.0s
+ => [3/4] COPY . /app                                                                                                                                                                                                                                    0.0s
+ => [4/4] RUN pip install --no-cache-dir -r requirements.txt                                                                                                                                                                                            11.1s
+ => exporting to image                                                                                                                                                                                                                                   1.0s 
+ => => exporting layers                                                                                                                                                                                                                                  1.0s 
+ => => writing image sha256:2fe94548fa4df3474f426fd00cf2c2928357065fcd7ce0e8e48635a0987e341f                                                                                                                                                             0.0s 
+ => => naming to docker.io/library/myserver:v1                           
+
+[ec2-user@ip-10-10-1-146 server]$ curl -s http://localhost:8000/items/3 | jq
+
+{
+  "item_id": 103,
+  "server": true,
+  "client": false
+}
+
+[ec2-user@ip-10-10-1-146 client]$ sudo docker build -t myclient:v1 .
+[+] Building 13.0s (9/9) FINISHED                                                                                                                                                                                                              docker:default
+ => [internal] load build definition from Dockerfile                                                                                                                                                                                                     0.0s
+ => => transferring dockerfile: 277B                                                                                                                                                                                                                     0.0s
+ => [internal] load .dockerignore                                                                                                                                                                                                                        0.0s
+ => => transferring context: 2B                                                                                                                                                                                                                          0.0s
+ => [internal] load metadata for docker.io/library/python:3.9-slim                                                                                                                                                                                       0.3s
+ => [1/4] FROM docker.io/library/python:3.9-slim@sha256:bcdcaefe092335ff0a0ed421e8a8d12b86fc2c1feb1199fbdac27d67ba808a9c                                                                                                                                 0.0s
+ => [internal] load build context                                                                                                                                                                                                                        0.0s
+ => => transferring context: 1.81kB                                                                                                                                                                                                                      0.0s
+ => CACHED [2/4] WORKDIR /app                                                                                                                                                                                                                            0.0s
+ => [3/4] COPY . /app                                                                                                                                                                                                                                    0.0s
+ => [4/4] RUN pip install --no-cache-dir -r requirements.txt                                                                                                                                                                                            11.4s
+ => exporting to image                                                                                                                                                                                                                                   1.1s
+ => => exporting layers                                                                                                                                                                                                                                  1.1s
+ => => writing image sha256:d7554b86e09deff12fc51a31932d285db4acc4e4afa085771e75e103989bc432                                                                                                                                                             0.0s 
+ => => naming to docker.io/library/myclient:v1                 
+ 
+
+[ec2-user@ip-10-10-1-146 server]$ sudo docker login -u AWS -p $(aws ecr get-login-password --region us-west-2) 748735308412.dkr.ecr.us-west-2.amazonaws.com
+WARNING! Using --password via the CLI is insecure. Use --password-stdin.
+WARNING! Your password will be stored unencrypted in /root/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+[ec2-user@ip-10-10-1-146 server]$ sudo docker tag server:v1 748735308412.dkr.ecr.us-west-2.amazonaws.com/server:latest
+[ec2-user@ip-10-10-1-146 server]$ sudo docker push 748735308412.dkr.ecr.us-west-2.amazonaws.com/server:latest
+The push refers to repository [748735308412.dkr.ecr.us-west-2.amazonaws.com/server]
+e2671409f93a: Pushed 
+d9a76ed7b23f: Pushed 
+dc81aa298ec8: Pushed 
+f268cf34955e: Pushed 
+087aa9f40b61: Pushed 
+c4e334227cca: Pushed 
+da5d55102092: Pushed 
+fb1bd2fc5282: Pushed 
+latest: digest: sha256:a868508ff408945813019832f9fe1d7090d0bb8d954b6cc702ca2191b47313d3 size: 1996
+[ec2-user@ip-10-10-1-146 server]$ 

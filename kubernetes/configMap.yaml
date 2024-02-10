@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+data:
+  SERVER_HOST: "server-service"
+  SERVER_PORT: "8000"
