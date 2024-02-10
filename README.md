@@ -1,8 +1,7 @@
-- Architecture.
-
+# kubernetes Architecture (used https://excalidraw.com/ to draw).
 ![kubernees](https://github.com/snehanshu11/kubernetes-microservices/assets/8538859/c6865abb-4877-42ed-94e4-c048e8ae530e)
 
-- Write two microservices in FASTAPI. (server.py, client.py)
+- Write two microservices in FASTAPI. ([server.py](https://github.com/snehanshu11/kubernetes-microservices/blob/main/server/server.py), [client.py](https://github.com/snehanshu11/kubernetes-microservices/blob/main/client/client.py))
 - Run the microservices on a local machine to test that it works.
 - Use of  environment variables in the code to keep it microservices decoupled
 - Write a docker file for each microservices .
