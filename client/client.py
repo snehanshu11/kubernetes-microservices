@@ -19,3 +19,7 @@ async def get_item(item_id: int):
             return json_response
         except Exception:
             raise HTTPException(status_code=status.HTTP_503_SERVICE_UNAVAILABLE, detail="server service is down")
+
+@app.get("/health")
+async def health():
+    return {"msg": "hello from client"}

@@ -61,7 +61,7 @@
    eksctl get cluster
    eksctl utils write-kubeconfig --cluster=<name>
    kubectl config current-context 
-   eksctl create cluster --name kube-cluster --nodegroup-name ng-default --version 1.28 --node-type t2.micro --nodes 2 --region us-west-2
+   eksctl create cluster --name kube-cluster --nodegroup-name ng-default --version 1.28 --node-type t2.micro --nodes 6 --region us-west-2 -clea-zones=us-west-2a,us-west-2b
   ```
 -  AWS managed, 2 nodes
 
@@ -105,6 +105,26 @@ kubectl get pods
 kubectl exec -it server-deployment-5d8d8869ff-2vkcz -- /bin/bash
 ```
 
-
-
- 
+# Installing Ingress Controller - AWS Load Balancer Controller
+```
+$ curl -O https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/v2.5.4/docs/install/iam_policy.json 
+$ aws iam create-policy --policy-name AWSLoadBalancerControllerIAMPolicy --policy-document file://iam_policy.json
+$ eksctl utils associate-iam-oidc-provider --region=us-west-2 --cluster=kube-cluster --approve
+$ eksctl create iamserviceaccount \
+  --cluster=kube-cluster \
+  --namespace=kube-system \
+  --name=aws-load-balancer-controller \
+  --role-name AmazonEKSLoadBalancerControllerRole \
+  --attach-policy-arn=arn:aws:iam::748735308412:policy/AWSLoadBalancerControllerIAMPolicy \
+  --approve
+$ kubectl apply \
+    --validate=false \
+    -f https://github.com/jetstack/cert-manager/releases/download/v1.13.3/cert-manager.yaml
+$ curl -Lo v2_5_4_full.yaml https://github.com/kubernetes-sigs/aws-load-balancer-controller/releases/download/v2.5.4/v2_5_4_full.yaml
+$ sed -i.bak -e '596,604d' ./v2_5_4_full.yaml
+$ sed -i.bak -e 's|your-cluster-name|kube-cluster|' ./v2_5_4_full.yaml
+$ kubectl apply -f v2_5_4_full.yaml
+$ curl -Lo v2_5_4_ingclass.yaml https://github.com/kubernetes-sigs/aws-load-balancer-controller/releases/download/v2.5.4/v2_5_4_ingclass.yaml
+$ kubectl apply -f v2_5_4_ingclass.yaml
+$ kubectl get deployment -n kube-system aws-load-balancer-controller
+``` 

@@ -26,11 +26,10 @@ kind: Service
 metadata:
   name: server-service
 spec:
-  #type: LoadBalancer
+  type: ClusterIP
   selector:
       app: server
   ports:
     - protocol: TCP
       port: 8000
       targetPort: 8000
-      #nodePort: 30100

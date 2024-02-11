@@ -1,0 +1,33 @@
+# Ingress Controller needs to be installed before uding Ingress. We are going to use AWS Load Balancer Controller. steps are mentioned in the aws documentation
+# You can also refer the README.md file for the exact steps
+# https://docs.aws.amazon.com/eks/latest/userguide/aws-load-balancer-controller.html
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: alb
+  annotations:
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    #alb.ingress.kubernetes.io/subnets: subnet-0ae48988e2322198d , subnet-09a96f19a95eb4d45, subnet-0c0e8401cdb8e931e
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP" : 80}]'
+spec:
+  ingressClassName: alb
+  rules:
+  - http:
+      paths:
+      - path: /items
+        pathType: Prefix
+        backend:
+          service:
+            name: server-service
+            port:
+              number: 8000
+      - path: /get_item
+        pathType: Prefix
+        backend:
+          service:
+            name: client-service
+            port:
+              number: 8001

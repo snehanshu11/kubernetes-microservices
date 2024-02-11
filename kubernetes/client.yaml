@@ -36,10 +36,10 @@ kind: Service
 metadata:
   name: client-service
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   selector:
       app: client
   ports:
     - protocol: TCP
-      port: 80
+      port: 8001
       targetPort: 8001
