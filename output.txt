@@ -1,0 +1,13 @@
+snehanshu.suman@LT7818 stage % curl -s http://k8s-default-alb-b3fcf283a7-200791112.us-west-2.elb.amazonaws.com/items/1 | jq
+{
+  "item_id": 101,
+  "server": true,
+  "client": false
+}
+snehanshu.suman@LT7818 stage % curl -s http://k8s-default-alb-b3fcf283a7-200791112.us-west-2.elb.amazonaws.com/get_item/23 | jq
+{
+  "item_id": 123,
+  "server": true,
+  "client": true
+}
+snehanshu.suman@LT7818 stage % 
