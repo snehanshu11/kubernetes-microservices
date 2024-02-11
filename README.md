@@ -49,12 +49,10 @@
    - Mention steps to test
 - Upload the images to ECR repository
   ``` 
-    aws ecr get-login-password --region us-east-1
-    sudo docker login -u AWS -p $(aws ecr get-login-password --region us-east-1) 748735308412.dkr.ecr.us-west-2.amazonaws.com
+    aws ecr get-login-password --region us-west-2
+    sudo docker login -u AWS -p $(aws ecr get-login-password --region us-west-2) 748735308412.dkr.ecr.us-west-2.amazonaws.com
     sudo docker tag server:v1 748735308412.dkr.ecr.us-west-2.amazonaws.com/server:latest
     sudo docker push 748735308412.dkr.ecr.us-west-2.amazonaws.com/server:latest
-    aws ecr get-login-password --region us-east-1
-    sudo docker login -u AWS -p $(aws ecr get-login-password --region us-west-2) 748735308412.dkr.ecr.us-west-2.amazonaws.com
   ```
   
 # create EKS cluster
