@@ -61,7 +61,7 @@
    eksctl get cluster
    eksctl utils write-kubeconfig --cluster=<name>
    kubectl config current-context 
-   eksctl create cluster --name kube-cluster --nodegroup-name ng-default --version 1.28 --node-type t2.micro --nodes 6 --region us-west-2 -clea-zones=us-west-2a,us-west-2b
+   eksctl create cluster --name kube-cluster --nodegroup-name ng-default --version 1.28 --node-type t2.micro --nodes 6 --region us-west-2
   ```
 -  AWS managed, 2 nodes
 
