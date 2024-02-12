@@ -128,3 +128,37 @@ $ curl -Lo v2_5_4_ingclass.yaml https://github.com/kubernetes-sigs/aws-load-bala
 $ kubectl apply -f v2_5_4_ingclass.yaml
 $ kubectl get deployment -n kube-system aws-load-balancer-controller
 ``` 
+
+# Helm 
+- commands
+  - helm create server
+  - helm install myserver server
+  - helm upgrade myserver server
+  - helm list -a
+  - helm rollback myserver 1
+  - helm --debug --dry-run server (renders teh chart template by interacting with kuberenetes api)
+  - helm template server (renders teh chart template locally)
+  - helm lint server(looks for erro or misconfiguration)
+  - helm uninstall myserver
+
+- create a boiler plate for the applications (helm cahrt)
+```
+helm create server
+helm create client
+```
+- Make changes
+
+- Install, myserver- chart release name
+```
+helm upgrade -i myserver server
+helm upgrade -i myclient client
+```
+- List
+```
+helm list -a
+```
+- Remove
+```
+helm uninstall server
+helm uninstall client
+```
